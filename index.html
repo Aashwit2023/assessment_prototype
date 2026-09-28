@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeritasAI - Enterprise Agentic RAG Assessment Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Chart.js for Enterprise Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="app-body">
+  <!-- Top Demo Guide / Role Bar -->
+  <header class="top-bar">
+    <div class="brand-section">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">VERITAS<strong>AI</strong></span>
+        <span class="brand-tag">AGENTIC RAG ASSESSMENT SUITE</span>
+      </div>
+    </div>
+
+    <!-- Quick Demo Guide Workflow Pills -->
+    <div class="demo-flow-bar" id="demoFlowBar">
+      <span class="demo-label">Demo Flow:</span>
+      <button class="flow-step-btn active" data-flow="prof-dash" title="Professor Dashboard">1. Dash</button>
+      <button class="flow-step-btn" data-flow="curriculum-upload" title="Upload Syllabus">2. Curriculum</button>
+      <button class="flow-step-btn" data-flow="ai-generator" title="Agentic RAG Generator">3. Generator</button>
+      <button class="flow-step-btn" data-flow="ai-workflow" title="RAG Pipeline Execution">4. RAG Run</button>
+      <button class="flow-step-btn" data-flow="question-review" title="Validation & Evidence">5. Validation</button>
+      <button class="flow-step-btn" data-flow="failure-retry" title="Grounding Failure & Self-Correction">6. Retry Demo</button>
+      <button class="flow-step-btn" data-flow="assessment-builder" title="Snapshot & Publish">7. Publish</button>
+      <button class="flow-step-btn" data-flow="student-exam" title="Live Student Exam">8. Student Exam</button>
+      <button class="flow-step-btn" data-flow="student-results" title="Grading & Solutions">9. Results</button>
+      <button class="flow-step-btn" data-flow="analytics" title="Class Performance Analytics">10. Analytics</button>
+      <button class="flow-step-btn" data-flow="integrity" title="Integrity Risk Signals">11. Integrity</button>
+    </div>
+
+    <!-- Role Switcher & User Profile Menu -->
+    <div class="user-action-section">
+      <div class="role-selector-pill">
+        <span class="role-label">Role:</span>
+        <div class="role-buttons" id="roleSelectorGroup">
+          <button class="role-btn active" data-role="professor">Professor</button>
+          <button class="role-btn" data-role="student">Student</button>
+          <button class="role-btn" data-role="admin">Admin</button>
+        </div>
+      </div>
+
+      <!-- Notifications Icon -->
+      <div class="notification-wrapper">
+        <button class="icon-button notification-trigger" id="notificationBtn" aria-label="Notifications">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="badge-dot" id="unreadNotifDot"></span>
+        </button>
+        <div class="notification-dropdown" id="notificationDropdown">
+          <div class="dropdown-header">
+            <h4>System Notifications</h4>
+            <span class="badge badge-subtle" id="notifCountBadge">4 new</span>
+          </div>
+          <div class="notif-list" id="notificationList"></div>
+          <div class="dropdown-footer">
+            <button class="text-link" id="markAllReadBtn">Mark all as read</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Chip -->
+      <div class="user-chip" id="currentUserChip">
+        <div class="user-avatar" id="currentAvatar">DR</div>
+        <div class="user-details-compact">
+          <span class="user-name" id="currentUserName">Prof. Marcus Vance</span>
+          <span class="user-role-name" id="currentUserRole">Faculty &bull; CS Dept</span>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-inner">
+        <!-- Navigation Menu items rendered dynamically based on active role -->
+        <div class="sidebar-nav-container">
+          <div class="sidebar-section-header" id="sidebarSectionTitle">PROFESSOR WORKSPACE</div>
+          <ul class="nav-links" id="sidebarNavList">
+            <!-- Injected by JS based on role -->
+          </ul>
+        </div>
+
+        <!-- Sidebar Footer Status -->
+        <div class="sidebar-footer">
+          <div class="agentic-status-box">
+            <div class="agentic-status-header">
+              <span class="status-pulse-dot"></span>
+              <span class="agentic-title">RAG Engine Active</span>
+            </div>
+            <p class="agentic-subtitle">Self-Correcting RAG v3.4 &bull; Llama-Index / Hybrid</p>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-avatar" id="sidebarProfileAvatar">MV</div>
+            <div class="profile-info">
+              <span class="profile-name" id="sidebarProfileName">Prof. Marcus Vance</span>
+              <span class="profile-dept" id="sidebarProfileDept">Dept of Computer Science</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="app-main" id="appMain">
+      <!-- Breadcrumb & Page Header Bar -->
+      <div class="page-topbar" id="pageTopbar">
+        <div class="page-title-group">
+          <div class="breadcrumb" id="pageBreadcrumb">Dashboard / Overview</div>
+          <h1 class="page-heading" id="pageHeading">Professor Dashboard</h1>
+        </div>
+        <div class="page-actions" id="pageActions">
+          <!-- Dynamically populated buttons -->
+        </div>
+      </div>
+
+      <!-- Dynamic View Screen Content -->
+      <div class="view-content" id="viewContainer">
+        <!-- Injected dynamically by component renderers -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Global Modal Container -->
+  <div class="modal-backdrop" id="globalModalBackdrop">
+    <div class="modal-container" id="globalModalContainer">
+      <div class="modal-header">
+        <h3 id="modalTitle">Modal Title</h3>
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Injected modal content -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <!-- Injected modal actions -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
